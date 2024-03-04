@@ -1,17 +1,25 @@
 <?php
-
+ 
 //Variabelen vullen
 $attractie = $_POST['attractie'];
 $capaciteit = $_POST['capaciteit'];
 $melder = $_POST['melder'];
-
+ 
 echo $attractie . " / " . $capaciteit . " / " . $melder;
-
-//1. Verbinding
+ 
+//verbinding maken
 require_once '../../../config/conn.php';
-
-//2. Query
-$query="INSERTINTOmeldingen(attractie,type)VALUES(:attractie,:type)";
-//3. Prepare
-
-//4. Execute
+//query
+$query = "INSERT INTO meldingen (attractie, capaciteit, melder)
+VALUES (:attractie, :capaciteit, :melder)";
+//prepare
+$statement = $conn->prepare($query);
+//execute
+$statement->execute([
+    ":attractie" => $attractie,
+    ":capaciteit" => $capaciteit,
+    ":melder" => $melder,
+]);
+ 
+ 
+ 
